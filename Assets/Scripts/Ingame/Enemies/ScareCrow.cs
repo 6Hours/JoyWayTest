@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ingame.Environment
+namespace Ingame.Enemies
 {
-    public class ScareCrow : MonoBehaviour
+    public class ScareCrow : Enemy
     {
         private MeshRenderer m_Renderer;
 
@@ -26,7 +26,7 @@ namespace Ingame.Environment
                 hp = Mathf.Clamp(value, 0, defaultHp);
                 if(hp == 0)
                 {
-                    StopBurning();
+                    RemainBurnSeconds = 0;
                     gameObject.SetActive(false);
                 }
                 OnHPChange?.Invoke(hp, (float)hp / defaultHp);
@@ -37,12 +37,9 @@ namespace Ingame.Environment
             get { return wet; }
             set 
             { 
-                wet = Mathf.Clamp(value, 0, maxWet); 
+                wet = Mathf.Clamp(value, 0, maxWet);
 
-                if(remainBurnSeconds > 0 && wet > 0)
-                {
-                    StopBurning();
-                }
+                m_Renderer.material.color = Color.Lerp(Color.yellow, Color.blue, (float)wet / maxWet);
             }
         }
         public bool ISWET
@@ -50,41 +47,49 @@ namespace Ingame.Environment
             get { return wet > 0;}
         }
 
-        public void SetBurn()
+        public int RemainBurnSeconds
         {
-            remainBurnSeconds = 10;
-            CancelInvoke();
-            InvokeRepeating("BurnTick", 0f, 1f);
+            get { return remainBurnSeconds; }
+            set
+            {
+                var oldValue = remainBurnSeconds;
+                remainBurnSeconds = ISWET? 0 : value;
+
+                if (remainBurnSeconds > 0)
+                {
+                    if(oldValue == 0) InvokeRepeating("BurnTick", 0f, 1f);
+
+                    m_Renderer.material.color = Color.red;
+                }
+                else
+                {
+                    CancelInvoke();
+
+                    if (!ISWET) m_Renderer.material.color = Color.yellow;
+                }
+            }
         }
         public bool ISBURN
         {
             get { return remainBurnSeconds > 0; }
         }
-
-        void Start()
-        {
-            m_Renderer = GetComponent<MeshRenderer>();
-
-            Initialize();
-        }
-
         public void Initialize()
         {
             HP = defaultHp;
             WET = 0;
             m_Renderer.material.color = Color.yellow;
         }
+        private void Start()
+        {
+            m_Renderer = GetComponent<MeshRenderer>();
+
+            Initialize();
+        }
 
         private void BurnTick() //FIXME: change my name pls
         {
             HP -= 10;
-            remainBurnSeconds--;
-            if (remainBurnSeconds == 0) StopBurning();
-        }
-        private void StopBurning()
-        {
-            remainBurnSeconds = 0;
-            CancelInvoke();
+            RemainBurnSeconds--;
         }
     }
 }

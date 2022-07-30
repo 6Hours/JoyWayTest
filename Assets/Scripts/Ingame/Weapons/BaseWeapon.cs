@@ -8,6 +8,10 @@ namespace Ingame.Weapon
     {
         private int buttonIndex;
 
+        protected virtual void Start()
+        {
+            enabled = false;
+        }
         void Update()
         {
             if (Input.GetMouseButtonDown(buttonIndex))
@@ -20,7 +24,7 @@ namespace Ingame.Weapon
             }
         }
 
-        public void SetButton(bool isLeft)
+        public virtual void SetButton(bool isLeft)
         {
             buttonIndex = isLeft ? 0 : 1;
         }

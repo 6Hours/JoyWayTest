@@ -1,4 +1,4 @@
-using Ingame.Environment;
+using Ingame.Enemies;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +19,10 @@ namespace UI
         {
             lineImage.fillAmount = ratio;
             lineImage.color = Color.Lerp(Color.red, Color.green, ratio);
+        }
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log(2);
         }
     }
 }

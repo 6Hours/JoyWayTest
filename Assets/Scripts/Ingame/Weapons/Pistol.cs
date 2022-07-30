@@ -1,4 +1,4 @@
-using Ingame.Environment;
+using Ingame.Enemies;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,11 +32,6 @@ namespace Ingame.Weapon
                     component.HP -= component.ISWET ? damageOnWet : (component.ISBURN ? damageOnBurn : normalDamage);
                 }
             }
-        }
-
-        void Start()
-        {
-
         }
     }
 }
