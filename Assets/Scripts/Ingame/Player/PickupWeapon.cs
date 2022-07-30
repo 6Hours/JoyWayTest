@@ -35,9 +35,12 @@ namespace Ingame.Player
                 if(hit.collider.TryGetComponent<BaseWeapon>(out var component))
                 {
                     var dropWeapon = isLeft? leftWeapon : rightWeapon;
-                    dropWeapon.transform.parent = null;
-                    dropWeapon.transform.position = component.transform.position;
-                    dropWeapon.enabled = false;
+                    if (dropWeapon != null)
+                    {
+                        dropWeapon.transform.parent = null;
+                        dropWeapon.transform.position = component.transform.position;
+                        dropWeapon.enabled = false;
+                    }
 
                     component.transform.parent = isLeft ?
                         leftWeaponParent : rightWeaponParent;

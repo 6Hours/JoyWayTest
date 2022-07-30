@@ -6,27 +6,17 @@ namespace Ingame.Weapon
 {
     public abstract class BaseWeapon : MonoBehaviour
     {
-        protected enum ButtonTriggerAction
-        {
-            buttonUp,
-            buttonDown
-        }
-
-        [SerializeField] protected ButtonTriggerAction action;
-
         private int buttonIndex;
 
-
-        // Update is called once per frame
         void Update()
         {
-            if (action == ButtonTriggerAction.buttonUp && Input.GetMouseButtonUp(buttonIndex))
+            if (Input.GetMouseButtonDown(buttonIndex))
             {
-                Fire();
+                OnMouseButtonDown();
             }
-            else if (action == ButtonTriggerAction.buttonDown && Input.GetMouseButtonDown(buttonIndex))
+            else if (Input.GetMouseButtonUp(buttonIndex))
             {
-                Fire();
+                OnMouseButtonUp();
             }
         }
 
@@ -34,6 +24,7 @@ namespace Ingame.Weapon
         {
             buttonIndex = isLeft ? 0 : 1;
         }
-        protected abstract void Fire();
+        protected abstract void OnMouseButtonDown();
+        protected abstract void OnMouseButtonUp();
     }
 }
