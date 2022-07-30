@@ -9,12 +9,12 @@ namespace Ingame.Weapon
     {
         [SerializeField] private float shotDistance;
         [SerializeField] private int normalDamage = 20;
-        [SerializeField] private int damageOnWet;
-        [SerializeField] private int damageOnBurn;
+        [SerializeField] private int damageOnWet = 10;
+        [SerializeField] private int damageOnBurn = 30;
 
         protected override void OnMouseButtonDown()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void OnMouseButtonUp()

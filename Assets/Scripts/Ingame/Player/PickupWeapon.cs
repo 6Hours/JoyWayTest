@@ -37,14 +37,14 @@ namespace Ingame.Player
                     var dropWeapon = isLeft? leftWeapon : rightWeapon;
                     if (dropWeapon != null)
                     {
-                        dropWeapon.transform.parent = null;
+                        dropWeapon.transform.parent = component.transform.parent;
                         dropWeapon.transform.position = component.transform.position;
                         dropWeapon.enabled = false;
                     }
 
-                    component.transform.parent = isLeft ?
-                        leftWeaponParent : rightWeaponParent;
-                    component.transform.position = Vector3.zero;
+                    component.transform.parent = isLeft ? leftWeaponParent : rightWeaponParent;
+                    component.transform.localPosition = Vector3.zero;
+                    component.transform.localRotation = Quaternion.identity;
 
                     component.enabled = true;
                     component.SetButton(isLeft);
