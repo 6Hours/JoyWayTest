@@ -27,7 +27,10 @@ namespace Ingame.Weapon
 
         protected override void OnMouseButtonUp()
         {
+            if (transform.parent != defaultParent) return;
+
             rigid.constraints = RigidbodyConstraints.None;
+            transform.parent = null;
             rigid.AddForce(transform.forward * throwPower);
         }
 
