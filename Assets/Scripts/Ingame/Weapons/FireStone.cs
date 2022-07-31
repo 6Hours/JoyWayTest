@@ -34,9 +34,12 @@ namespace Ingame.Weapon
                 var target = (to as ScareCrow);
 
                 target.WET -= 1;
-                target.RemainBurnSeconds = 10;
 
-                if (!target.ISWET) target.HP -= 1;
+                if (!target.ISWET)
+                {
+                    target.HP -= 1;
+                    target.RemainBurnSeconds = 10;
+                }
             }
         }
     }

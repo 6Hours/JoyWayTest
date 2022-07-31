@@ -53,7 +53,7 @@ namespace Ingame.Enemies
             set
             {
                 var oldValue = remainBurnSeconds;
-                remainBurnSeconds = ISWET? 0 : value;
+                remainBurnSeconds = value;
 
                 if (remainBurnSeconds > 0)
                 {
